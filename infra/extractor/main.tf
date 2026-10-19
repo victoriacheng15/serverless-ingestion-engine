@@ -184,8 +184,8 @@ resource "aws_iam_role_policy" "eventbridge_ecs_policy" {
 
 resource "aws_cloudwatch_event_rule" "extractor_schedule" {
   name                = "${var.project_name}-schedule"
-  description         = "Triggers extractor container on Tuesday and Thursday at 02:16 UTC"
-  schedule_expression = "cron(16 2 ? * TUE,THU *)"
+  description         = "Triggers extractor container on Tuesday and Friday at 02:16 UTC"
+  schedule_expression = "cron(16 2 ? * TUE,FRI *)"
   state               = var.is_schedule_enabled ? "ENABLED" : "DISABLED"
 }
 

@@ -34,6 +34,7 @@ jobs:
             python:
               - 'src/**'
               - 'tests/**'
+              - 'feeds.json'
               - 'pyproject.toml'
               - 'uv.lock'
             infra:
@@ -42,6 +43,7 @@ jobs:
             docker:
               - 'Dockerfile'
               - 'src/**'
+              - 'feeds.json'
               - 'pyproject.toml'
               - 'uv.lock'
             markdown:
@@ -114,6 +116,8 @@ jobs:
           tflint_version: v0.64.0
 
       - name: Init and Run TFLint
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           tflint --init
           tflint --chdir=infra
@@ -161,7 +165,7 @@ jobs:
     if: |
       always() &&
       github.event_name == 'pull_request' &&
-      contains(github.event.pull_request.labels.*.name, 'dev-test') &&
+      (needs.changes.outputs.infra == 'true' || needs.changes.outputs.python == 'true' || needs.changes.outputs.docker == 'true' || contains(github.event.pull_request.labels.*.name, 'dev-test')) &&
       needs.quality-and-tests.result != 'failure' &&
       needs.infra-security.result != 'failure' &&
       needs.container-security.result != 'failure'

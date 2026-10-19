@@ -16,7 +16,7 @@ The engine follows an asynchronous, event-driven decoupled architecture with cod
 
 The extractor runs as an ephemeral ECS Fargate container on Alpine Linux (51.7 MB compressed) with a read-only root filesystem:
 
-- **Scheduled Trigger:** EventBridge invokes the task twice weekly in Production (Tuesdays and Thursdays at 02:16 UTC).
+- **Scheduled Trigger:** EventBridge invokes the task twice weekly in Production (Tuesdays and Fridays at 02:16 UTC).
 - **Feed Registry:** Reads `feeds.json` directly from the S3 configuration bucket.
 - **Concurrency:** Ingests feeds concurrently with per-host timeouts to isolate slow upstream hosts.
 

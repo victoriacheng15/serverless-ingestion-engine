@@ -14,7 +14,7 @@ The Serverless Ingestion Engine is an event-driven, multi-environment distribute
   - Dev and Prod run isolated AWS stacks namespaced by `${var.project_name}-${var.environment}`.
   - S3 backend state is partitioned into dedicated keys: `state/dev/terraform.tfstate` and `state/prod/terraform.tfstate`.
   - Dev runs strictly on-demand (EventBridge cron schedule disabled; `is_schedule_enabled = false`).
-  - Prod runs scheduled cron ingestion twice weekly on Tuesdays and Thursdays at 02:16 UTC (`cron(16 2 ? * TUE,THU *)`).
+  - Prod runs scheduled cron ingestion twice weekly on Tuesdays and Fridays at 02:16 UTC (`cron(16 2 ? * TUE,FRI *)`).
 - **Cost-Optimized Zero-NAT Egress:**
   - ECS Fargate extractor containers run in public subnets with `assign_public_ip = true` and an egress-only security group (`ingress = []`).
   - Outbound internet access operates via AWS Internet Gateway without incurring fixed hourly NAT Gateway fees.
