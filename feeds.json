@@ -1,9 +1,23 @@
 [
   {
-    "id": "aws-compute",
-    "name": "AWS Compute Blog",
-    "provider": "AWS",
-    "url": "https://aws.amazon.com/blogs/compute/feed/",
+    "id": "cloudflare-eng",
+    "name": "Cloudflare Engineering",
+    "provider": "Cloudflare",
+    "url": "https://blog.cloudflare.com/rss/",
+    "enabled": true
+  },
+  {
+    "id": "k8s-blog",
+    "name": "Kubernetes Official Blog",
+    "provider": "Kubernetes",
+    "url": "https://kubernetes.io/feed.xml",
+    "enabled": true
+  },
+  {
+    "id": "datadog-eng",
+    "name": "Datadog Engineering",
+    "provider": "Datadog",
+    "url": "https://www.datadoghq.com/blog/engineering/index.xml",
     "enabled": true
   },
   {

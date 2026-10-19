@@ -5,7 +5,7 @@ set -euo pipefail
 # Manual On-Demand Ingestion Trigger
 #
 # Production runs automatically on schedule via EventBridge:
-#   cron(16 2 ? * TUE,THU *)
+#   cron(16 2 ? * TUE,FRI *)
 #
 # Prerequisite:
 #   OpenTofu registers the active ECS task definition with the container image:
