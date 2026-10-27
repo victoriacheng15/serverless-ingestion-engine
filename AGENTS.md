@@ -40,7 +40,7 @@ Always use `uv` and the provided `Makefile` targets. Do not install global Pytho
 | `make lint` | `uv run ruff check . && uv run ruff format --check .` | Python linting and format inspection |
 | `make format` | `uv run ruff format .` | Auto-format Python code |
 | `make test` | `uv run pytest` | Run all unit tests with pytest |
-| `make md-lint` | `npx markdownlint-cli "**/*.md"` | Markdown linting across repository |
+| `make lint-md` | `npx markdownlint-cli "**/*.md"` | Markdown linting across repository |
 | `make tofu-fmt` | `tofu fmt -recursive infra/` | Format OpenTofu configurations |
 | `make tofu-validate` | `cd infra && tofu init -backend=false && tofu validate` | Validate OpenTofu root and modules |
 
@@ -128,4 +128,4 @@ tofu validate
 1. **Be Surgical:** Limit edits strictly to the requested lines or components. Avoid gratuitous refactoring.
 2. **Preserve Comments & Docstrings:** Do not remove existing comments or docstrings unless directly superseded.
 3. **Relative Links:** Use relative paths (e.g. `docs/architecture.md`) in documentation and responses. Never use absolute paths or `file://` schemes.
-4. **Verify All Edits:** Always run `make lint`, `make test`, `make md-lint`, and `make tofu-validate` after modifying code or documentation.
+4. **Verify All Edits:** Always run `make lint`, `make test`, `make lint-md`, and `make tofu-validate` after modifying code or documentation.

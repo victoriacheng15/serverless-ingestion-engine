@@ -102,7 +102,7 @@ Run automated unit tests, verification scripts, formatters, and code quality lin
 ```bash
 make lint           # Run ruff check and format inspection
 make test           # Run all unit tests with pytest (20/20 passed)
-make md-lint        # Lint markdown documentation files
+make lint-md     # Lint markdown documentation files
 make tofu-fmt       # Check OpenTofu formatting across all modules
 make tofu-validate  # Validate root and sub-module OpenTofu configurations
 ```

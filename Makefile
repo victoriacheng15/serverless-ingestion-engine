@@ -1,4 +1,4 @@
-.PHONY: help run sync lint format test md-lint md-format tofu-fmt tofu-validate compose-up compose-down
+.PHONY: help run sync lint format test lint-md format-md tofu-fmt tofu-validate compose-up compose-down
 
 help:
 	@echo "Usage: make [target]"
@@ -11,8 +11,8 @@ help:
 	@echo "  test          Run unit tests with pytest"
 	@echo ""
 	@echo "Markdown:"
-	@echo "  md-lint       Lint markdown files using markdownlint-cli"
-	@echo "  md-format     Format and fix markdown files using markdownlint-cli"
+	@echo "  lint-md       Lint markdown files using markdownlint-cli"
+	@echo "  format-md     Format and fix markdown files using markdownlint-cli"
 	@echo ""
 	@echo "OpenTofu:"
 	@echo "  tofu-fmt      Format OpenTofu configuration files"
@@ -46,11 +46,11 @@ test:
 # Markdown
 # ==============================================================================
 
-md-lint:
-	npx markdownlint-cli "**/*.md" --ignore node_modules --ignore .venv
+lint-md:
+	npx markdownlint-cli "**/*.md" --ignore .venv
 
-md-format:
-	npx markdownlint-cli --fix "**/*.md" --ignore node_modules --ignore .venv
+format-md:
+	npx markdownlint-cli --fix "**/*.md" --ignore .venv
 
 # ==============================================================================
 # OpenTofu
