@@ -84,7 +84,7 @@ jobs:
 
       - name: Run Markdown Lint
         if: ${{ needs.changes.outputs.markdown == 'true' }}
-        run: make md-lint
+        run: make lint-md
 
   infra-security:
     name: Infrastructure & Policy Scanning

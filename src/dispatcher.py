@@ -3,6 +3,7 @@ import json
 import logging
 import os
 import time
+import urllib.error
 import urllib.request
 from datetime import UTC, datetime
 
@@ -72,8 +73,32 @@ def dispatch_to_discord(
         method="POST",
     )
 
-    with urllib.request.urlopen(req, timeout=10) as response:
-        logger.info("Discord returned status code: %d", response.status)
+    max_retries = 3
+    for attempt in range(max_retries + 1):
+        try:
+            with urllib.request.urlopen(req, timeout=10) as response:
+                logger.info("Discord returned status code: %d", response.status)
+                return
+        except urllib.error.HTTPError as err:
+            if err.code == 429 and attempt < max_retries:
+                retry_after_header = err.headers.get("Retry-After")
+                try:
+                    retry_after = (
+                        float(retry_after_header)
+                        if retry_after_header
+                        else (attempt + 1) * 2.0
+                    )
+                except (ValueError, TypeError):
+                    retry_after = (attempt + 1) * 2.0
+                logger.warning(
+                    "Discord 429 Rate Limit hit. Backing off for %.2f seconds (attempt %d/%d)",
+                    retry_after,
+                    attempt + 1,
+                    max_retries,
+                )
+                time.sleep(retry_after)
+                continue
+            raise
 
 
 def process_record(record: dict, table=None) -> None:

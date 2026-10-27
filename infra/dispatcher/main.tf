@@ -84,4 +84,8 @@ resource "aws_lambda_event_source_mapping" "sqs_trigger" {
   batch_size              = 10
   enabled                 = true
   function_response_types = ["ReportBatchItemFailures"]
+
+  scaling_config {
+    maximum_concurrency = 2
+  }
 }

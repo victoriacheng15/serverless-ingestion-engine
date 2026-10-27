@@ -92,6 +92,36 @@ def test_dispatch_to_discord(
         )
 
 
+def test_dispatch_to_discord_rate_limit_retry(monkeypatch):
+    monkeypatch.setenv("DISCORD_WEBHOOK_URL", "https://discord.com/api/webhooks/test")
+    article = {"title": "Rate Limit Test"}
+    url = "https://example.com/rate-limit"
+
+    headers_429 = {"Retry-After": "0.01"}
+    err_429 = urllib.error.HTTPError(
+        url="https://discord.com/api/webhooks/test",
+        code=429,
+        msg="Too Many Requests",
+        hdrs=headers_429,
+        fp=None,
+    )
+
+    mock_resp = MagicMock()
+    mock_resp.status = 204
+    mock_resp.__enter__.return_value = mock_resp
+    mock_resp.__exit__.return_value = False
+
+    with (
+        patch(
+            "urllib.request.urlopen", side_effect=[err_429, mock_resp]
+        ) as mock_urlopen,
+        patch("time.sleep") as mock_sleep,
+    ):
+        dispatch_to_discord(article, url)
+        assert mock_urlopen.call_count == 2
+        mock_sleep.assert_called_once_with(0.01)
+
+
 @pytest.mark.parametrize(
     "article, url, expected_suffix",
     [
